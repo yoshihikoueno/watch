@@ -16,7 +16,7 @@ import (
 )
 
 var interval = flag.Int("n", 5, "Interval in seconds")
-var runWithCommand = flag.Bool("x", false, "Run with command processor")
+var runWithoutCommand = flag.Bool("x", false, "Pass command to exec instead of command processor")
 var hideTitle = flag.Bool("t", false, "Hide title bar")
 var exitOnError = flag.Bool("e", false, "Exit on non-zero return of command")
 var preciseInterval = flag.Bool("p", false, "Try to run at precise interval")
@@ -45,7 +45,10 @@ func main() {
 	var cmd string
 	var cmdArgs []string
 
-	if *runWithCommand {
+	if *runWithoutCommand {
+		cmd = cmdArray[0]
+		cmdArgs = cmdArray[1:]
+	} else {
 		c, e := ps.FindProcess(os.Getppid())
 		if e != nil {
 			fmt.Printf("Error getting parent command processor: %v\n", e)
@@ -59,9 +62,6 @@ func main() {
 			cmdArgs[0] = "-c"
 		}
 		cmdArgs = append(cmdArgs, cmdArray...)
-	} else {
-		cmd = cmdArray[0]
-		cmdArgs = cmdArray[1:]
 	}
 
 	run(time.Now(), cmd, cmdArgs)

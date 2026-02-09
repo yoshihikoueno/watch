@@ -19,7 +19,7 @@ provided watch command.
 
 -t    Hide title bar
 
--x    Run with command processor (cmd.exe/pwsh.exe/powershell.exe)
+-x    Pass command to exec instead of command processor (cmd.exe/pwsh.exe/powershell.exe/bash.exe)
 
 
 ### Exit codes
