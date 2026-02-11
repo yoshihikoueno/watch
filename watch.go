@@ -61,6 +61,9 @@ func main() {
 			cmdArgs[0] = "-c"
 		}
 		cmdArgs = append(cmdArgs, cmdArray...)
+		if cmd == "sh.exe" || cmd == "bash.exe" {
+			cmdArgs = []string{strings.Join(cmdArgs, " ")}
+		}
 	}
 
 	run(time.Now(), cmd, cmdArgs)
