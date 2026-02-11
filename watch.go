@@ -19,7 +19,6 @@ var interval = flag.Int("n", 5, "Interval in seconds")
 var runWithoutCommand = flag.Bool("x", false, "Pass command to exec instead of command processor")
 var hideTitle = flag.Bool("t", false, "Hide title bar")
 var exitOnError = flag.Bool("e", false, "Exit on non-zero return of command")
-var preciseInterval = flag.Bool("p", false, "Try to run at precise interval")
 var exitOnChange = flag.Bool("g", false, "Exit when output changes")
 var oldOutput string
 
@@ -72,11 +71,7 @@ func main() {
 			if time.Now().After(nextRun) || time.Now().Equal(nextRun) {
 				startOfRun := time.Now()
 				run(t, cmd, cmdArgs)
-				if *preciseInterval {
-					nextRun = startOfRun.Add(time.Duration(*interval) * time.Second)
-				} else {
-					nextRun = time.Now().Add(time.Duration(*interval) * time.Second)
-				}
+				nextRun = startOfRun.Add(time.Duration(*interval) * time.Second)
 			}
 		}
 	}()
